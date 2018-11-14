@@ -99,8 +99,8 @@ echo "[*] Final configuration:"
 I=1
 echo "$SECRET" | tr ',' '\n' | while read S; do
   echo "[*]   Secret $I: $S"
-  echo "[*]   tg:// link for secret $I auto configuration: tg://proxy?server=${EXTERNAL_IP}&port=443&secret=${S}"
-  echo "[*]   t.me link for secret $I: https://t.me/proxy?server=${EXTERNAL_IP}&port=443&secret=${S}"
+  echo "[*]   tg:// link for secret $I auto configuration: tg://proxy?server=${EXTERNAL_IP}&port=80&secret=${S}"
+  echo "[*]   t.me link for secret $I: https://t.me/proxy?server=${EXTERNAL_IP}&port=80&secret=${S}"
   I=$(($I+1))
 done
 
@@ -111,5 +111,5 @@ echo
 echo '[+] Starting proxy...'
 sleep 1
 
-# exec /mtproxy/mtproto-proxy -p 2398 -H 443 -M "$WORKERS" -C 60000 --aes-pwd /etc/telegram/hello-explorers-how-are-you-doing -u root $CONFIG --allow-skip-dh --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
+# exec /mtproxy/mtproto-proxy -p 2398 -H 80 -M "$WORKERS" -C 60000 --aes-pwd /etc/telegram/hello-explorers-how-are-you-doing -u root $CONFIG --allow-skip-dh --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
 exec /mtproxy/mtproto-proxy "$@" --aes-pwd ${REMOTE_SECRET} --user root ${REMOTE_CONFIG} --nat-info "$INTERNAL_IP:$EXTERNAL_IP" ${SECRET_CMD} ${TAG_CMD}
